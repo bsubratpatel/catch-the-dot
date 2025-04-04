@@ -1,308 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Google Site Verification -->
-  <meta name="google-site-verification" content="DOduiSKCMP1iUFkBuhY5BrZ2Ii66XJz6wuIu0thEVRg" />
-  
-  <title>Catch the Dot</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    <meta name="google-site-verification" content="DOduiSKCMP1iUFkBuhY5BrZ2Ii66XJz6wuIu0thEVRg" />
+  
+  <title>Catch the Dot</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-    #game-container {
-      text-align: center;
-      color: #fff;
-      width: 100%;
-      max-width: 450px;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(10px);
-    }
+    #game-container {
+      text-align: center;
+      color: #fff;
+      width: 100%;
+      max-width: 450px;
+      padding: 30px; /* Increased padding */
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+      backdrop-filter: blur(10px);
+    }
 
-    #game-title {
-      font-size: 2.5rem;
-      margin-bottom: 15px;
-      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-      animation: fadeIn 1s ease-in;
-    }
+    #game-title {
+      font-size: 3rem; /* Larger title */
+      margin-bottom: 20px;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4); /* Stronger text shadow */
+      animation: fadeIn 1s ease-in;
+    }
 
-    #game-area {
-      position: relative;
-      width: 90%;
-      height: 320px;
-      background: linear-gradient(45deg, #34495e, #2c3e50);
-      border-radius: 15px;
-      overflow: hidden;
-      margin: 0 auto;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    }
+    #game-area {
+      position: relative;
+      width: 95%; /* Slightly wider game area */
+      height: 350px; /* Slightly taller game area */
+      background: linear-gradient(45deg, #34495e, #2c3e50);
+      border-radius: 20px; /* More rounded corners */
+      overflow: hidden;
+      margin: 20px auto; /* Increased margin */
+      border: 3px solid rgba(255, 255, 255, 0.3); /* Thicker border */
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); /* Stronger box shadow */
+    }
 
-    #dot {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      background: linear-gradient(135deg, #e74c3c, #c0392b);
-      border-radius: 50%;
-      cursor: pointer;
-      transition: left 0.3s ease, top 0.3s ease, transform 0.2s ease, background 0.5s ease, width 0.5s ease, height 0.5s ease;
-      box-shadow: 0 0 10px rgba(231, 76, 60, 0.8);
-      display: none;
-    }
+    #dot {
+      position: absolute;
+      width: 40px; /* Slightly larger dot */
+      height: 40px; /* Slightly larger dot */
+      background: radial-gradient(circle, #e74c3c, #c0392b); /* Radial gradient */
+      border-radius: 50%;
+      cursor: pointer;
+      transition: left 0.2s ease, top 0.2s ease, transform 0.1s ease, background 0.3s ease, width 0.3s ease, height 0.3s ease; /* Faster transitions */
+      box-shadow: 0 0 15px rgba(231, 76, 60, 0.9); /* Stronger shadow */
+      display: none;
+    }
 
-    #dot:hover {
-      transform: scale(1.2);
-    }
+    #dot:hover {
+      transform: scale(1.25); /* Slightly more scaling on hover */
+    }
 
-    #score, #timer, #high-score, #streak {
-      font-size: 1.3rem;
-      margin-top: 15px;
-      padding: 8px 15px;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
-      display: inline-block;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
+    #score, #timer, #high-score, #streak {
+      font-size: 1.4rem; /* Slightly larger font */
+      margin-top: 18px; /* Increased margin */
+      padding: 10px 20px; /* Increased padding */
+      background: rgba(0, 0, 0, 0.3); /* Slightly darker background */
+      border-radius: 12px; /* More rounded corners */
+      display: inline-block;
+      box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+    }
 
-    @keyframes flash {
-      0% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.1); }
-      100% { opacity: 1; transform: scale(1); }
-    }
+    @keyframes flash {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.1); } /* Slightly less opaque during flash */
+      100% { opacity: 1; transform: scale(1); }
+    }
 
-    .flash {
-      animation: flash 0.3s ease 2;
-    }
+    .flash {
+      animation: flash 0.2s ease 2; /* Faster flash */
+    }
 
-    #score.flash-end {
-      animation: flash 0.5s ease infinite;
-    }
+    #score.flash-end {
+      animation: flash 0.4s ease infinite; /* Slightly faster infinite flash */
+    }
 
-    #start-button {
-      margin-top: 25px;
-      padding: 12px 30px;
-      font-size: 1.1rem;
-      background: linear-gradient(90deg, #27ae60, #2ecc71);
-      color: #fff;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(39, 174, 96, 0.5);
-    }
+    #start-button {
+      margin-top: 30px; /* Increased margin */
+      padding: 15px 35px; /* Increased padding */
+      font-size: 1.2rem; /* Slightly larger font */
+      background: linear-gradient(90deg, #27ae60, #2ecc71);
+      color: #fff;
+      border: none;
+      border-radius: 30px; /* More rounded corners */
+      cursor: pointer;
+      transition: all 0.2s ease; /* Faster transition */
+      box-shadow: 0 5px 18px rgba(39, 174, 96, 0.6); /* Stronger shadow */
+    }
 
-    #start-button:hover {
-      background: linear-gradient(90deg, #2ecc71, #27ae60);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(39, 174, 96, 0.7);
-    }
+    #start-button:hover {
+      background: linear-gradient(90deg, #2ecc71, #27ae60);
+      transform: translateY(-3px); /* Slightly more translation on hover */
+      box-shadow: 0 7px 22px rgba(39, 174, 96, 0.8); /* Stronger shadow */
+    }
 
-    #start-button:active {
-      transform: translateY(1px);
-      box-shadow: 0 2px 10px rgba(39, 174, 96, 0.5);
-    }
+    #start-button:active {
+      transform: translateY(0); /* No translation on active */
+      box-shadow: 0 3px 12px rgba(39, 174, 96, 0.6); /* Adjusted shadow */
+    }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-30px); } /* Increased initial translation */
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
-  <div id="game-container">
-    <h1 id="game-title">Catch the Dot</h1>
-    <div id="game-area">
-      <div id="dot"></div>
-    </div>
-    <div id="score">Score: 0</div>
-    <div id="timer">Time: 30</div>
-    <div id="high-score">High Score: 0</div>
-    <div id="streak">Streak: 0</div>
-    <button id="start-button">Start Game</button>
-    <audio id="click-sound" src="https://www.soundjay.com/buttons/beep-01a.mp3"></audio>
-    <audio id="bonus-sound" src="https://www.soundjay.com/buttons/beep-07.mp3"></audio>
-    <audio id="game-over-sound" src="https://www.soundjay.com/misc/sounds/game-over-1.mp3"></audio>
-  </div>
+  <div id="game-container">
+    <h1 id="game-title">Catch the Dot</h1>
+    <div id="game-area">
+      <div id="dot"></div>
+    </div>
+    <div id="score">Score: 0</div>
+    <div id="timer">Time: 30</div>
+    <div id="high-score">High Score: 0</div>
+    <div id="streak">Streak: 0</div>
+    <button id="start-button">Start Game</button>
+    <audio id="bonus-sound" src="https://www.soundjay.com/buttons/beep-07.mp3"></audio>
+    <audio id="game-over-sound" src="https://www.soundjay.com/misc/sounds/game-over-1.mp3"></audio>
+  </div>
 
-  <script>
-    const gameArea = document.getElementById('game-area');
-    const dot = document.getElementById('dot');
-    const scoreDisplay = document.getElementById('score');
-    const timerDisplay = document.getElementById('timer');
-    const highScoreDisplay = document.getElementById('high-score');
-    const streakDisplay = document.getElementById('streak');
-    const startButton = document.getElementById('start-button');
-    const clickSound = document.getElementById('click-sound');
-    const bonusSound = document.getElementById('bonus-sound');
-    const gameOverSound = document.getElementById('game-over-sound');
+  <script>
+    const gameArea = document.getElementById('game-area');
+    const dot = document.getElementById('dot');
+    const scoreDisplay = document.getElementById('score');
+    const timerDisplay = document.getElementById('timer');
+    const highScoreDisplay = document.getElementById('high-score');
+    const streakDisplay = document.getElementById('streak');
+    const startButton = document.getElementById('start-button');
+    const bonusSound = document.getElementById('bonus-sound');
+    const gameOverSound = document.getElementById('game-over-sound');
 
-    let score = 0;
-    let timeLeft = 30;
-    let streak = 0;
-    let gameInterval;
-    let timerInterval;
-    let highScore = localStorage.getItem('highScore') || 0;
-    highScoreDisplay.textContent = `High Score: ${highScore}`;
+    let score = 0;
+    let timeLeft = 30;
+    let streak = 0;
+    let gameInterval;
+    let timerInterval;
+    let highScore = localStorage.getItem('highScore') || 0;
+    highScoreDisplay.textContent = `High Score: ${highScore}`;
 
-    // Function to move the dot smoothly
-    function moveDot() {
-      const x = Math.random() * (gameArea.offsetWidth - dot.offsetWidth);
-      const y = Math.random() * (gameArea.offsetHeight - dot.offsetHeight);
-      dot.style.left = `${x}px`;
-      dot.style.top = `${y}px`;
-    }
+    // Function to move the dot smoothly
+    function moveDot() {
+      const x = Math.random() * (gameArea.offsetWidth - dot.offsetWidth);
+      const y = Math.random() * (gameArea.offsetHeight - dot.offsetHeight);
+      dot.style.left = `${x}px`;
+      dot.style.top = `${y}px`;
+    }
 
-    // Function to update dot appearance and return speed
-    function updateDotAppearance() {
-      const level = Math.floor(score / 10);
-      if (level >= 2) {
-        dot.style.width = '20px';
-        dot.style.height = '20px';
-        dot.style.background = 'linear-gradient(135deg, #f1c40f, #e67e22)'; // Gold
-      } else if (level >= 1) {
-        dot.style.width = '25px';
-        dot.style.height = '25px';
-        dot.style.background = 'linear-gradient(135deg, #8e44ad, #3498db)'; // Purple-Blue
-      } else {
-        dot.style.width = '30px';
-        dot.style.height = '30px';
-        dot.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)'; // Red
-      }
-      return Math.max(300, 800 - score * 15); // Speed increases with score
-    }
+    // Function to update dot appearance and return speed
+    function updateDotAppearance() {
+      const level = Math.floor(score / 10);
+      if (level >= 2) {
+        dot.style.width = '30px'; /* Increased size for gold */
+        dot.style.height = '30px'; /* Increased size for gold */
+        dot.style.background = 'radial-gradient(circle, #f1c40f, #e67e22)'; // Gold radial gradient
+        dot.style.boxShadow = '0 0 20px rgba(241, 196, 15, 0.9)'; /* Stronger shadow for gold */
+      } else if (level >= 1) {
+        dot.style.width = '35px'; /* Increased size for purple-blue */
+        dot.style.height = '35px'; /* Increased size for purple-blue */
+        dot.style.background = 'radial-gradient(circle, #8e44ad, #3498db)'; // Purple-Blue radial gradient
+        dot.style.boxShadow = '0 0 18px rgba(142, 68, 173, 0.9)'; /* Stronger shadow for purple-blue */
+      } else {
+        dot.style.width = '40px';
+        dot.style.height = '40px';
+        dot.style.background = 'radial-gradient(circle, #e74c3c, #c0392b)'; // Red radial gradient
+        dot.style.boxShadow = '0 0 15px rgba(231, 76, 60, 0.9)'; /* Stronger shadow for red */
+      }
+      return Math.max(250, 750 - score * 15); // Speed increases with score (adjusted values)
+    }
 
-    // Function to check for bonuses
-    function checkBonus() {
-      if (Math.random() < 0.15 && score > 5) {
-        dot.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)'; // Green bonus
-        setTimeout(() => {
-          updateDotAppearance(); // Revert to level-based appearance
-        }, 1000);
-        bonusSound.play();
-        return true;
-      }
-      return false;
-    }
+    // Function to check for bonuses
+    function checkBonus() {
+      if (Math.random() < 0.15 && score > 5) {
+        dot.style.background = 'radial-gradient(circle, #2ecc71, #27ae60)'; // Green bonus radial gradient
+        dot.style.boxShadow = '0 0 25px rgba(46, 204, 113, 0.9)'; /* Stronger shadow for bonus */
+        setTimeout(() => {
+          updateDotAppearance(); // Revert to level-based appearance
+        }, 1000);
+        bonusSound.play();
+        return true;
+      }
+      return false;
+    }
 
-    // Function to start the game
-    function startGame() {
-      score = 0;
-      timeLeft = 30;
-      streak = 0;
-      scoreDisplay.textContent = `Score: ${score}`;
-      timerDisplay.textContent = `Time: ${timeLeft}`;
-      streakDisplay.textContent = `Streak: ${streak}`;
-      startButton.disabled = true;
-      scoreDisplay.classList.remove('flash-end');
+    // Function to start the game
+    function startGame() {
+      score = 0;
+      timeLeft = 30;
+      streak = 0;
+      scoreDisplay.textContent = `Score: ${score}`;
+      timerDisplay.textContent = `Time: ${timeLeft}`;
+      streakDisplay.textContent = `Streak: ${streak}`;
+      startButton.disabled = true;
+      scoreDisplay.classList.remove('flash-end');
 
-      // Ensure dot is visible and reset
-      dot.style.display = 'block';
-      updateDotAppearance();
-      moveDot();
+      // Ensure dot is visible and reset
+      dot.style.display = 'block';
+      updateDotAppearance();
+      moveDot();
 
-      // Start dot movement
-      clearInterval(gameInterval);
-      gameInterval = setInterval(moveDot, updateDotAppearance());
+      // Start dot movement
+      clearInterval(gameInterval);
+      gameInterval = setInterval(moveDot, updateDotAppearance());
 
-      // Start timer
-      clearInterval(timerInterval);
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        timerDisplay.textContent = `Time: ${timeLeft}`;
+      // Start timer
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = `Time: ${timeLeft}`;
 
-        if (timeLeft <= 0) {
-          clearInterval(gameInterval);
-          clearInterval(timerInterval);
-          startButton.disabled = false;
-          dot.style.display = 'none';
+        if (timeLeft <= 0) {
+          clearInterval(gameInterval);
+          clearInterval(timerInterval);
+          startButton.disabled = false;
+          dot.style.display = 'none';
 
-          if (score > highScore) {
-            highScore = score;
-            localStorage.setItem('highScore', highScore);
-            highScoreDisplay.textContent = `High Score: ${highScore}`;
-          }
+          if (score > highScore) {
+            highScore = score;
+            localStorage.setItem('highScore', highScore);
+            highScoreDisplay.textContent = `High Score: ${highScore}`;
+          }
 
-          scoreDisplay.classList.add('flash-end');
-          gameOverSound.play();
-          setTimeout(() => {
-            scoreDisplay.classList.remove('flash-end');
-            alert(`Game Over! Final Score: ${score}\nHigh Score: ${highScore}`);
-          }, 2000);
-        } else {
-          clearInterval(gameInterval);
-          gameInterval = setInterval(moveDot, updateDotAppearance());
-        }
-      }, 1000);
-    }
+          scoreDisplay.classList.add('flash-end');
+          gameOverSound.play();
+          setTimeout(() => {
+            scoreDisplay.classList.remove('flash-end');
+            alert(`Game Over! Final Score: ${score}\nHigh Score: ${highScore}`);
+          }, 2000);
+        } else {
+          clearInterval(gameInterval);
+          gameInterval = setInterval(moveDot, updateDotAppearance());
+        }
+      }, 1000);
+    }
 
-    // Event listener for clicking the dot
-    dot.addEventListener('click', () => {
-      streak++;
-      let points = 1;
-      if (checkBonus()) {
-        points = 5;
-        timeLeft += 2;
-        timerDisplay.textContent = `Time: ${timeLeft}`;
-      }
-      score += points * Math.ceil(streak / 5);
-      scoreDisplay.textContent = `Score: ${score}`;
-      streakDisplay.textContent = `Streak: ${streak}`;
-      clickSound.play();
-      scoreDisplay.classList.add('flash');
-      setTimeout(() => scoreDisplay.classList.remove('flash'), 300);
-      moveDot();
-      updateDotAppearance();
-    });
+    // Event listener for clicking the dot
+    dot.addEventListener('click', () => {
+      streak++;
+      let points = 1;
+      if (checkBonus()) {
+        points = 5;
+        timeLeft += 2;
+        timerDisplay.textContent = `Time: ${timeLeft}`;
+      }
+      score += points * Math.ceil(streak / 5);
+      scoreDisplay.textContent = `Score: ${score}`;
+      streakDisplay.textContent = `Streak: ${streak}`;
+      scoreDisplay.classList.add('flash');
+      setTimeout(() => scoreDisplay.classList.remove('flash'), 300);
+      moveDot();
+      updateDotAppearance();
+    });
 
-    // Event listener for start button
-    startButton.addEventListener('click', startGame);
+    // Event listener for start button
+    startButton.addEventListener('click', startGame);
 
-    // Touch support
-    dot.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      streak++;
-      let points = 1;
-      if (checkBonus()) {
-        points = 5;
-        timeLeft += 2;
-        timerDisplay.textContent = `Time: ${timeLeft}`;
-      }
-      score += points * Math.ceil(streak / 5);
-      scoreDisplay.textContent = `Score: ${score}`;
-      streakDisplay.textContent = `Streak: ${streak}`;
-      clickSound.play();
-      scoreDisplay.classList.add('flash');
-      setTimeout(() => scoreDisplay.classList.remove('flash'), 300);
-      moveDot();
-      updateDotAppearance();
-    });
+    // Touch support
+    dot.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      streak++;
+      let points = 1;
+      if (checkBonus()) {
+        points = 5;
+        timeLeft += 2;
+        timerDisplay.textContent = `Time: ${timeLeft}`;
+      }
+      score += points * Math.ceil(streak / 5);
+      scoreDisplay.textContent = `Score: ${score}`;
+      streakDisplay.textContent = `Streak: ${streak}`;
+      scoreDisplay.classList.add('flash');
+      setTimeout(() => scoreDisplay.classList.remove('flash'), 300);
+      moveDot();
+      updateDotAppearance();
+    });
 
-    gameArea.addEventListener('touchmove', (e) => {
-      e.preventDefault();
-    }, { passive: false });
+    gameArea.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+    }, { passive: false });
 
-    // Reset streak on miss
-    gameArea.addEventListener('click', (e) => {
-      if (e.target !== dot) {
-        streak = 0;
-        streakDisplay.textContent = `Streak: ${streak}`;
-      }
-    });
-  </script>
+    // Reset streak on miss
+    gameArea.addEventListener('click', (e) => {
+      if (e.target !== dot) {
+        streak = 0;
+        streakDisplay.textContent = `Streak: ${streak}`;
+      }
+    });
+  </script>
 </body>
 </html>
